@@ -5,6 +5,10 @@ import java.sql.Statement;
 
 public class DataBaseUtil {
    public static void createTable() {
+       String dbUrl = System.getenv("DB_URL");
+       String dbUser = System.getenv("DB_USER");
+       String dbPassword = System.getenv("DB_PASSWORD");
+
        String sql = "create table if not exists contact (" +
             "id serial primary key," +
             "name varchar(25) not null" +
@@ -12,9 +16,8 @@ public class DataBaseUtil {
             "phone number varchar(12) unique" +
             ")";
 
-
         try {
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/contact_manager", "postgres", "1");
+            Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
             connection.close();;
